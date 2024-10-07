@@ -12,9 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sentencia->bind_param("ss", $nombre_usuario, $contraseña_cifrada);
 
     if ($sentencia->execute()) {
-        echo "Usuario registrado exitosamente.";
+        $exito = "Paquete registrado exitosamente.";
     } else {
-        echo "Error al registrar usuario: " . $conexion->error;
+        $error = "Error al registrar el paquete.";
     }
 }
 ?>
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <h2 class="text-center mt-5">Registrar Usuario</h2>
-        <form method="POST" action="insertar_usuario.php">
+        <form method="POST" action="registrar_usuario.php">
             <div class="form-group">
                 <label for="nombre_usuario">Nombre de Usuario:</label>
                 <input type="text" name="nombre_usuario" class="form-control" required>
@@ -57,6 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="contraseña">Contraseña:</label>
                 <input type="password" name="contraseña" class="form-control" required>
             </div>
+            <?php if (isset($exito)) { echo '<div class="alert alert-success">' . $exito . '</div>'; } ?>
+            <?php if (isset($error)) { echo '<div class="alert alert-danger">' . $error . '</div>'; } ?>
             <button type="submit" class="btn btn-primary btn-block">Registrar</button>
             <a href="menu.php" class="btn-custom">Retroceder</a>
         </form>
